@@ -1,34 +1,40 @@
-# Имя сценария
 name: Jupyter
+
+# Controls when the workflow will run
 on:
-# Настройка триггеров для автоматического запуска сценария после добавления изменений в проект на GitHub. По умолчанию можно отключить эту возможность - сценарий запускается только в ручном режиме со страницы Actions.
-	push:
-		branches: [ "main" ]
-	pull_request:
-		branches: [ "main" ]
-	# Запуск сценария в ручном режиме
-	workflow_dispatch:
-# Запуск GitHub Actions состоит из одного или нескольких заданий, которые могут выполняться последовательно или параллельно.
-	jobs:
-	# Этот сценарий содержит одно задание с именем "build"
-		build:
-			# На каком образе будет запускаться наш сценарий: по умолчанию стоит Ubuntu, оставляем.
-			runs-on: ubuntu-latest
-		# Шаги представляют собой последовательность задач, которые будут выполняться как часть задания
-		steps:
-		- name: Checkout # Извлечение репозитория в $GITHUB_WORKSPACE, чтобы задание могло получить к нему доступ
-			uses: actions/checkout@v3
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+# Шаги представляют собой последовательность задач, которые будут выполняться как часть задания
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+	 	- name: Checkout # Извлечение репозитория в $GITHUB_WORKSPACE, чтобы задание могло получить к нему доступ
+		uses: actions/checkout@v3
 		- name: Setup Python # Установка python окружения для выполнения задания
-			uses: actions/setup-python@v4.0.0
-			with:
-			cache: pip
-			python-version: '3.7'
+		uses: actions/setup-python@v4.0.0
+		with:
+		cache: pip
+		python-version: '3.7'
 		- name: Install Dependencies # Установка зависимостей для Jupyter
-			run: pip install -r requirements.txt
+		run: pip install -r requirements.txt
 		- name: Exeute Notebook # Выполнение тетрадки Jupyter
-			run: jupyter-nbconvert --execute plot_iris_exercise.ipynb --to html
+		run: jupyter-nbconvert --execute plot_iris_exercise.ipynb --to html
 		- name: Upload a Build Artifact # Выгрузка вывода тетрадки (артефакта задания) в html файл
-			uses: actions/upload-artifact@v3.1.0
-			with:
-			name: Artifact
-			path: plot_iris_exercise.html
+		uses: actions/upload-artifact@v3.1.0
+		with:
+		name: Artifact
+		path: plot_iris_exercise.html
