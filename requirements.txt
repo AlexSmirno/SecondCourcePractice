@@ -1,5 +1,6 @@
+jupyter_client
+nbconvert
 numpy
 matplotlib
 sklearn
-jupyterlab
-nbconvert
+ipykernel
