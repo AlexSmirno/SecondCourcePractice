@@ -1,0 +1,41 @@
+name: SendToKaggle
+
+on:
+
+  workflow_dispatch:
+
+jobs:
+
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checks-out
+      - uses: actions/checkout@v3
+      
+      - name: python
+        uses: actions/setup-python@v4.0.0
+        with:
+          cache: pip
+          python-version: '3.7'
+        
+      - name: install environment
+        run: pip install -r requirements.txt
+      
+      - name: Solve titanic
+        run: jupyter-execute TitanicSolution.ipynb
+        
+      - name: Login to Kaggle accaunt
+        run: |
+              echo "EMAIL_KAGGLE=${{ secrets.EMAIL_KAGGLE }}" >> $GITHUB_ENV
+              echo "PASS_KAGGLE=${{ secrets.PASS_KAGGLE }}" >> $GITHUB_ENV
+        
+      - name: submit my solve
+        run: kaggle competitions submit -c titanic -f ./DatasetsTitanic/submission.csv -m "New submission"
+      
+      - name: create artifact from competition
+        uses: actions/upload/artifact@v3.1.0
+        with:
+          name: Artifact
+          path: ./DatasetsTitanic/submission.csv
