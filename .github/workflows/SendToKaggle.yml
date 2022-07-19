@@ -31,6 +31,9 @@ jobs:
         
       - name: Install competition packages
         run: kaggle competitions download -c titanic
+        
+      - name: Unzip packages
+        run: unzip titanic.zip -d ./DatasetsTitanic
       
       - name: Exeute Notebook
         run: jupyter-execute TitanicSolution.ipynb
