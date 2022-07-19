@@ -37,6 +37,7 @@ jobs:
       
       - name: Exeute Notebook
         run: jupyter-execute TitanicSolution.ipynb
+        
       - name: Submit Predictions to Kaggle
         run: kaggle competitions submit -c titanic -f ./DatasetsTitanic/submission.csv -m "New submition"
           
