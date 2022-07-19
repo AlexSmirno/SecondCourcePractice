@@ -1,6 +1,7 @@
 jupyter_client
 nbconvert
 numpy
+pandas
 matplotlib
 sklearn
 ipykernel
