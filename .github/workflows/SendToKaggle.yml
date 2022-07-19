@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with:
           name: Artifact
-          path: ./DatasetsTitanic/submission.csv
+          path: /home/runner/work/SecondCourcePractice/SecondCourcePractice/titanic.zip
