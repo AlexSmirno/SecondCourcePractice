@@ -1,41 +1,41 @@
-name: SendToKaggle
+name: Kaggle
 
 on:
 
   workflow_dispatch:
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
+  # This workflow contains a single job called "build"
   build:
-  
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checks-out
-      - uses: actions/checkout@v3
-      
-      - name: python
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
         uses: actions/setup-python@v4.0.0
         with:
           cache: pip
           python-version: '3.7'
-        
-      - name: install environment
+          
+      - name: Install Dependencies
         run: pip install -r requirements.txt
       
-      - name: Solve titanic
+      - name: Exeute Notebook
         run: jupyter-execute TitanicSolution.ipynb
         
-      - name: Login to Kaggle accaunt
+      - name: Login to Kaggle
         run: |
               echo "KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}" >> $GITHUB_ENV
               echo "KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}" >> $GITHUB_ENV
-        
-      - name: submit my solve
-        run: kaggle competitions submit -c titanic -f ./DatasetsTitanic/submission.csv -m "New submission"
-      
-      - name: create artifact from competition
-        uses: actions/upload/artifact@v3.1.0
+      - name: Submit Predictions to Kaggle
+        run: kaggle competitions submit -c titanic -f ./DatasetsTitanic/submission.csv -m "New submition"
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
         with:
           name: Artifact
           path: ./DatasetsTitanic/submission.csv
