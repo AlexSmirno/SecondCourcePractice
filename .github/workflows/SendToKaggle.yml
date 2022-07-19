@@ -30,7 +30,7 @@ jobs:
               echo "KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}" >> $GITHUB_ENV
         
       - name: Install competition packages
-        run: kaggle competition download -c titanic
+        run: kaggle competitions download -c titanic
       
       - name: Exeute Notebook
         run: jupyter-execute TitanicSolution.ipynb
