@@ -23,14 +23,17 @@ jobs:
           
       - name: Install Dependencies
         run: pip install -r requirements.txt
-      
-      - name: Exeute Notebook
-        run: jupyter-execute TitanicSolution.ipynb
         
       - name: Login to Kaggle
         run: |
               echo "KAGGLE_USERNAME=${{ secrets.KAGGLE_USERNAME }}" >> $GITHUB_ENV
               echo "KAGGLE_KEY=${{ secrets.KAGGLE_KEY }}" >> $GITHUB_ENV
+        
+      - name: Install competition packages
+        run: kaggle competition download -c titanic
+      
+      - name: Exeute Notebook
+        run: jupyter-execute TitanicSolution.ipynb
       - name: Submit Predictions to Kaggle
         run: kaggle competitions submit -c titanic -f ./DatasetsTitanic/submission.csv -m "New submition"
           
